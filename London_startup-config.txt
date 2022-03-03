@@ -1,0 +1,98 @@
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+ip dhcp excluded-address 200.100.50.192 200.100.50.193
+!
+ip dhcp pool london
+ network 200.100.50.192 255.255.255.224
+ default-router 200.100.50.193
+ dns-server 200.100.50.130
+ domain-name write
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 200.100.50.193 255.255.255.224
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet1/0
+ ip address 150.150.4.2 255.255.252.0
+ shutdown
+!
+interface GigabitEthernet2/0
+ ip address 150.150.8.1 255.255.252.0
+ shutdown
+!
+interface Serial3/0
+ ip address 150.150.20.3 255.255.252.0
+ encapsulation frame-relay
+ frame-relay interface-dlci 301
+ frame-relay interface-dlci 302
+ frame-relay interface-dlci 303
+ frame-relay interface-dlci 304
+ frame-relay lmi-type ansi
+!
+router eigrp 10
+ network 150.150.4.0 0.0.3.255
+ network 150.150.8.0 0.0.3.255
+ network 200.100.50.192 0.0.0.31
+ network 150.150.20.0 0.0.3.255
+ no auto-summary
+!
+router rip
+ network 150.150.0.0
+ network 200.100.50.0
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+no cdp run
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

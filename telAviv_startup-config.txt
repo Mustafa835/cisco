@@ -1,0 +1,94 @@
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+ip dhcp excluded-address 200.100.50.1 200.100.50.0
+ip dhcp excluded-address 200.100.50.1
+ip dhcp excluded-address 200.100.50.1 200.100.50.2
+!
+ip dhcp pool telAviv
+ network 200.100.50.0 255.255.255.224
+ default-router 200.100.50.1
+ dns-server 200.100.50.130
+ domain-name write
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 200.100.50.1 255.255.255.224
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet1/0
+ ip address 150.150.12.2 255.255.252.0
+ shutdown
+!
+interface GigabitEthernet2/0
+ ip address 150.150.8.2 255.255.252.0
+ shutdown
+!
+interface Serial3/0
+ ip address 150.150.20.4 255.255.252.0
+ encapsulation frame-relay
+ frame-relay interface-dlci 401
+ frame-relay interface-dlci 402
+ frame-relay interface-dlci 403
+ frame-relay interface-dlci 404
+ frame-relay lmi-type ansi
+!
+router eigrp 10
+ network 150.150.12.0 0.0.3.255
+ network 150.150.8.0 0.0.3.255
+ network 200.100.50.0 0.0.0.31
+ network 150.150.20.0 0.0.3.255
+ no auto-summary
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+

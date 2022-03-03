@@ -1,0 +1,90 @@
+!
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 200.100.50.129 255.255.255.224
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet1/0
+ ip address 150.150.4.1 255.255.252.0
+ shutdown
+!
+interface GigabitEthernet2/0
+ ip address 150.150.0.1 255.255.252.0
+ shutdown
+!
+interface Serial3/0
+ ip address 150.150.20.2 255.255.252.0
+ encapsulation frame-relay
+ frame-relay interface-dlci 201
+ frame-relay interface-dlci 202
+ frame-relay interface-dlci 203
+ frame-relay interface-dlci 204
+ frame-relay lmi-type ansi
+!
+router eigrp 10
+ network 150.150.0.0 0.0.3.255
+ network 200.100.50.128 0.0.0.31
+ network 150.150.4.0 0.0.3.255
+ network 150.150.20.0 0.0.3.255
+ no auto-summary
+!
+router rip
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+no cdp run
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
+
